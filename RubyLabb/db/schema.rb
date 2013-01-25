@@ -26,11 +26,11 @@ ActiveRecord::Schema.define(:version => 20130124204931) do
   add_index "projects", ["users_id"], :name => "index_projects_on_users_id"
 
   create_table "projects_users", :id => false, :force => true do |t|
-    t.integer "ticket_id"
+    t.integer "user_id"
     t.integer "project_id"
   end
 
-  add_index "projects_users", ["ticket_id", "project_id"], :name => "index_projects_users_on_ticket_id_and_project_id"
+  add_index "projects_users", ["user_id", "project_id"], :name => "index_projects_users_on_user_id_and_project_id"
 
   create_table "statuses", :force => true do |t|
     t.string   "status_name"
