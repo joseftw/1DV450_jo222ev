@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20130124204931) do
 
   create_table "projects", :force => true do |t|
-    t.integer  "users_id"
+    t.integer  "user_id"
     t.string   "name"
     t.string   "description"
     t.datetime "start_date"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20130124204931) do
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "projects", ["users_id"], :name => "index_projects_on_users_id"
+  add_index "projects", ["user_id"], :name => "index_projects_on_user_id"
 
   create_table "projects_users", :id => false, :force => true do |t|
     t.integer "user_id"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20130124204931) do
 
   create_table "tickets", :force => true do |t|
     t.integer  "users_id"
-    t.integer  "projects_id"
+    t.integer  "project_id"
     t.integer  "status_id"
     t.string   "name"
     t.string   "description"

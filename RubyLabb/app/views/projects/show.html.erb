@@ -1,10 +1,16 @@
-<h1>Project details. </h1>
+<h1>Project details </h1>
+<div id="projectDetailDiv" class="span8">
+  <h2><%= @project.name %></h2>
+  <label for="singleProjectDescription" class="text-info">Description</label>
+  
+  <p id="singleProjectDescription"><%= @project.description %></p>
+  
+  <label for="singleProjectMemberList">Project members</label>
+  <ul ="singleProjectMemberList" class="inline">
+    <% @project.users.each do |user| %>
+      <li><%= link_to user.first_name, user_path(user) %></li>
+    <% end %>
+  </ul>
+</div>
 
-<h2 id="singleProjectTitle"><%= @project.name %></h2>
-<p id="singleProjectDescription"><%= @project.description %></p>
-<label for="singleProjectMemeberList">Project members</label>
-<ul ="singleProjectMemberList">
-  <% @project.users.each do |user| %>
-    <li><%= link_to user.first_name, user_path(user) %></li>
-  <% end %>
-</ul>
+<%=@project.tickets.inspect%>
