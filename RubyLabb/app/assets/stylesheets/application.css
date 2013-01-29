@@ -14,10 +14,14 @@
 #wrapper {}
 #projectsDiv {background: #e3e3e3;}
 #projectsList {width:90%; min-height:100px;}
+
 .projectListH3 a {padding-left:5px; padding-right:5px;}
 .projectMemberList {text-align:center;}
 .projectMemberList:before {content: "Members: ";}
 .projectMemberList li:after {content: ",";}
 .projectMemberList li:last-child:after {content: "";}
 
-#singleProjectDescription {padding: 5px; border:1px solid #e3e3e3;}
+#singleProjectDescription {padding: 5px; width:80%; padding-left:20px;}
+#projectDetailDiv {background: #e3e3e3;}
+#singleProjectListContainer ul {text-align: center;}
+#singleProjectListContainer label {text-align: center;}

@@ -1,18 +1,17 @@
 <div class="container">
-<div id="projectsDiv" class="span12">
-<h1>All projects</h1>
-
-<ul id="projectsList" class="inline">
-<% @projects.each do |project| %>
-<li><h3 class="projectListH3"><%= link_to project.name, project_path(project) %></h3>
-<ul class="projectMemberList inline">
-  <% project.users.each do |user| %>
-    <li><%= link_to user.first_name, user_path(user) %></li>
-  <% end %>  
-</ul>
-</li>
-<% end %>
-</ul>
+  <div id="projectsDiv" class="span12">
+    <h1>All projects</h1>
+    
+    <ul id="projectsList" class="inline">
+      <% @projects.each do |project| %>
+      <li><h3 class="projectListH3"><%= link_to project.name, project_path(project) %></h3>
+        <ul class="projectMemberList inline">
+          <% project.users.each do |user| %>
+            <li><%= link_to user.first_name, user_path(user) %></li>
+          <% end %>  
+        </ul>
+      </li>
+    <% end %>
+    </ul>
+  </div>
 </div>
-</div>
-<%=@projects.first.tickets%>

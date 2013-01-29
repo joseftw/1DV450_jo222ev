@@ -13,7 +13,7 @@ RubyLabb::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   resources :projects
   resources :users
-  resources :users
+  resources :tickets
 
   # Sample resource route with options:
   #   resources :products do

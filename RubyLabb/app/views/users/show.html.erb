@@ -1,4 +1,26 @@
-<h1>Details for <%= @User.first_name + " " + @User.last_name %> </h1>
-
-<p id="singleMemberName">Full name: <%= @User.first_name + " " + @User.last_name %></p>
-<p id="singelMemberEmail">Email: <%= @User.email %> </p>
+<h1>User details </h1>
+<div id="userDetailDiv" class="span9 offset1">
+  <div class="row">
+    <div class="span9">
+      <h2><%= @User.first_name + " " + @User.last_name %></h2>
+      <div id="singleUserListContainer" class="row">
+        <div class="span4">
+          <label for="singleUserTicketList">User tickets</label>
+          <ul ="singleUserTicketList" class="inline">
+            <% @User.tickets.each do |ticket| %>
+              <li><%= link_to ticket.name, ticket_path(ticket) %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div id="singleUserListContainer" class="span4 pull-right">
+          <label for="singleUserMemberList">User projects</label>
+          <ul ="singleUserMemberList" class="inline">
+            <% @User.projects.each do |project| %>
+              <li><%= link_to project.name, project_path(project) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
