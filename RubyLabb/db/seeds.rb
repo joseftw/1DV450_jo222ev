@@ -8,8 +8,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 p1 = Project.new
-p1.name = "Kill Usama Bin Laden"
-p1.description = "We know where he is moahahaha"
+p1.name = "Hack Facebook"
+p1.description = "We like Twitter, not Facebook, let's destroy it"
 p1.start_date = Time.now
 p1.end_date = Time.now + (2*7*24*60*60)
 p1.save
@@ -38,3 +38,37 @@ u2.save
 u1.projects << p1
 u2.projects << p1
 u2.projects << p2
+
+s1 = Status.new
+s1.status_name = "Fixed";
+s1.save
+
+s2 = Status.new
+s2.status_name = "Critical"
+s2.save
+
+s3 = Status.new
+s3.status_name = "Low priority"
+s3.save 
+
+s4 = Status.new
+s4.status_name = "Will not fix"
+s4.save
+
+t1 = Ticket.new
+t1.name = "Hacking problem"
+t1.description = "It seems like Facebook has very high security"
+t1.save
+
+t2 = Ticket.new
+t2.name = "Not enough money"
+t2.description = "iMacs are more expensive than we first thought, give me some money!"
+t2.save
+
+t1.user << u1
+t1.project << p1
+t1.status << s3
+
+t2.user << u2
+t2.project << p2
+t2.status << s3
