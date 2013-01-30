@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+  #Kontrollerar inloggningen
+  before_filter :check_login
+  
+  def index
+    @Users = User.all
+  end
   
   def show
     @UserId = params[:id]

@@ -1,7 +1,6 @@
-<div class="container">
-  <div id="projectsDiv" class="span12">
+<div class="row">  
+  <div id="mainDiv" class="span12 gradientGray">
     <h1>All projects</h1>
-    
     <ul id="projectsList" class="inline">
       <% @projects.each do |project| %>
       <li><h3 class="projectListH3"><%= link_to project.name, project_path(project) %></h3>

@@ -12,16 +12,31 @@
  *= require_tree .
  */
 #wrapper {}
-#projectsDiv {background: #e3e3e3;}
 #projectsList {width:90%; min-height:100px;}
-
 .projectListH3 a {padding-left:5px; padding-right:5px;}
 .projectMemberList {text-align:center;}
 .projectMemberList:before {content: "Members: ";}
 .projectMemberList li:after {content: ",";}
 .projectMemberList li:last-child:after {content: "";}
 
+#usersList h3 {text-align: center;}
+.userProjectList:before {content: "Projects: ";}
+
 #singleProjectDescription {padding: 5px; width:80%; padding-left:20px;}
-#projectDetailDiv {background: #e3e3e3;}
 #singleProjectListContainer ul {text-align: center;}
 #singleProjectListContainer label {text-align: center;}
+
+.gradientGray {background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2); background-repeat: repeat-x; border:1px solid #d4d4d4;}
+
+.ticketDiv p{margin-left:5px; margin-right:5px;}
+.right {text-align: right;}
+.navMargin {margin-top:12px; margin-left:8px;}
+
+/******************FONTS OCH FÄRGER*******************************************/
+
+.critical {color:#B94A48;}
+.fixed {color: #DD1144;}
+.will-not-fix {color: #3A87AD;}
+.low-priority {color:#C09853;}
+
+.white {color:white;}

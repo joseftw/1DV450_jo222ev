@@ -65,6 +65,26 @@ t2.name = "Not enough money"
 t2.description = "iMacs are more expensive than we first thought, give me some money!"
 t2.save
 
+t3 = Ticket.new
+t3.name = "Should I steal some?"
+t3.description = "I've found a truck with plenty of computers!"
+t3.save
+
+t4 = Ticket.new
+t4.name = "I want a PC"
+t4.description = "Let's buy an HP PC instead"
+t4.save
+
+t5 = Ticket.new
+t5.name = "Testing 5"
+t5.description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud "
+t5.save
+
+t6 = Ticket.new
+t6.name = "Testing 6"
+t6.description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud "
+t6.save
+
 t1.user = u1
 t1.project = p1
 t1.status = s3
@@ -73,5 +93,25 @@ t2.user = u2
 t2.project = p2
 t2.status = s3
 
+t3.user = u2
+t3.project = p2
+t3.status = s2
+
+t4.user = u1
+t4.project = p2
+t4.status = s4
+
+t5.user = u1
+t5.project = p2
+t5.status = s4
+
+t6.user = u1
+t6.project = p2
+t6.status = s4
+
 t1.save
 t2.save
+t3.save
+t4.save
+t5.save
+t6.save

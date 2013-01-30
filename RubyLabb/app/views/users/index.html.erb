@@ -1,0 +1,17 @@
+<div class="row">
+  <div id="mainDiv" class="span12 gradientGray">
+    <h1>All users</h1>
+
+    <ul id="usersList" class="inline">
+      <% @Users.each do |user| %>
+      <li><h3 class="userListH3"><%= link_to user.first_name, user_path(user) %></h3>
+        <ul class="userProjectList inline">
+          <% user.projects.each do |project| %>
+            <li><%= link_to project.name, project_path(project) %></li>
+          <% end %>  
+        </ul>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+</div>

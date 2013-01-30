@@ -1,10 +1,9 @@
-<h1>User details </h1>
-<div id="userDetailDiv" class="span9 offset1">
-  <div class="row">
-    <div class="span9">
+<div class="row">
+    <div class="span10 gradientGray">
       <h2><%= @User.first_name + " " + @User.last_name %></h2>
+      <p>Email: <%= @User.email %> </p>
       <div id="singleUserListContainer" class="row">
-        <div class="span4">
+        <div class="span2">
           <label for="singleUserTicketList">User tickets</label>
           <ul ="singleUserTicketList" class="inline">
             <% @User.tickets.each do |ticket| %>
@@ -12,7 +11,7 @@
             <% end %>
           </ul>
         </div>
-        <div id="singleUserListContainer" class="span4 pull-right">
+        <div id="singleUserListContainer" class="span2">
           <label for="singleUserMemberList">User projects</label>
           <ul ="singleUserMemberList" class="inline">
             <% @User.projects.each do |project| %>
@@ -23,4 +22,3 @@
       </div>
     </div>
   </div>
-</div>

@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="span12 gradientGray">
+    <h1><i>Tickets for project "<%= @tickets.first.project.name %>"</i></h1>
+        <% @tickets.each_with_index do |ticket, index| %>
+        <% if index % 3 == 0 %>
+            <div class="row">
+             <div class="span4 ticketDiv">
+               <h3 class="pagination-centered"><%= ticket.name %></h3>
+               <p class="pull-left"><%= ticket.user.first_name + " " + ticket.user.last_name %></p>
+               <% cssClass = ticket.status.status_name.downcase %>
+               <% cssClass = cssClass.gsub /\s+/, '-' %>
+               <p class="<%= cssClass %> right"><%= ticket.status.status_name %></p>
+               <p><%= ticket.description  %></p>
+            </div> 
+          <% else %>
+            <div class="span4 ticketDiv">
+             <h3 class="pagination-centered"><%= ticket.name %></h3>
+              <p class="pull-left"><%= ticket.user.first_name + " " + ticket.user.last_name %></p>
+              <% cssClass = ticket.status.status_name.downcase %>
+              <% cssClass = cssClass.gsub /\s+/, '-' %>
+              <p class="<%= cssClass %> right"><%= ticket.status.status_name %></p>
+             <p><%= ticket.description  %></p>
+            </div>
+            <% if index % 2 == 0 %>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+  </div>
+</div>

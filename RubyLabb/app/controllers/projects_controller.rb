@@ -1,7 +1,12 @@
 class ProjectsController < ApplicationController
 
+  before_filter :check_login
 def index
-  @projects = Project.all 
+    
+    user_id = session[:user_id]
+    @projects = Project.all
+    @user = User.find(user_id)
+   
 end
 
 def show
