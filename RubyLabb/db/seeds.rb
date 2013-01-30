@@ -65,10 +65,13 @@ t2.name = "Not enough money"
 t2.description = "iMacs are more expensive than we first thought, give me some money!"
 t2.save
 
-t1.users << u1
-t1.projects << p1
-t1.status << s3
+t1.user = u1
+t1.project = p1
+t1.status = s3
 
-t2.users << u2
-t2.project << p2
-t2.status << s3
+t2.user = u2
+t2.project = p2
+t2.status = s3
+
+t1.save
+t2.save
