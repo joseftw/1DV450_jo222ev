@@ -1,0 +1,27 @@
+<% content_for :menu do %>
+  <li><a href="/home">Home</a></li>
+  <li><a href="/projects">All projects</a></li>
+  <li class="active"><a href="/projects/new">New project</a></li>
+<% end %>
+<div class="row">
+    <div class="span10 gradientGray">
+      <h2>Add a new project</h2>
+      
+      <%= form_for @project do |f| %>
+        <fieldset>
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+          
+          <%= f.label :description %>
+          <%= f.text_field :description %>
+          
+          <%= f.label :start_date %>
+          <%= f.text_field :start_date %>
+          <%= f.label :end_date %>
+          <%= f.text_field :end_date %>
+          
+          <%= f.submit "Add project" %>
+        </fieldset>
+      <% end %>
+  </div>
+</div>

@@ -6,7 +6,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-
+Project.delete_all
 p1 = Project.new
 p1.name = "Hack Facebook"
 p1.description = "We like Twitter, not Facebook, let's destroy it"
@@ -21,6 +21,7 @@ p2.start_date = Time.now
 p2.end_date = Time.now + (2*7*24*60*60)
 p2.save
 
+User.delete_all
 u1 = User.new
 u1.first_name = "Daniel"
 u1.last_name = "Toll"
@@ -39,6 +40,7 @@ u1.projects << p1
 u2.projects << p1
 u2.projects << p2
 
+Status.delete_all
 s1 = Status.new
 s1.status_name = "Fixed";
 s1.save
@@ -55,6 +57,7 @@ s4 = Status.new
 s4.status_name = "Will not fix"
 s4.save
 
+Ticket.delete_all
 t1 = Ticket.new
 t1.name = "Hacking problem"
 t1.description = "It seems like Facebook has very high security"

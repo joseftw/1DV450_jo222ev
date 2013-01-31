@@ -21,7 +21,8 @@
 
 #usersList h3 {text-align: center;}
 .userProjectList:before {content: "Projects: ";}
-
+.projectCreator {text-align: center;}
+.projectCreator:before {content: "Creator: ";}
 #singleProjectDescription {padding: 5px; width:80%; padding-left:20px;}
 #singleProjectListContainer ul {text-align: center;}
 #singleProjectListContainer label {text-align: center;}

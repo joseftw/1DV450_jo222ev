@@ -1,9 +1,15 @@
+<% content_for :menu do %>
+  <li><a href="/home">Home</a></li>
+  <li class="active"><a href="/projects">All projects</a></li>
+  <li><a href="/projects/new">New project</a></li>
+<% end %>
+
 <div class="row">
     <div class="span10 gradientGray">
       <h2><%= @project.name %></h2>
       <p id="singleProjectDescription"><%= @project.description %></p>
-      <div id="singleProjectListContainer" class="row">
-        <div class="span2">
+      <div class="row">
+        <div class="span4">
           <label for="singleProjectTicketList">Project tickets</label>
           <ul ="singleProjectTicketList" class="inline">
             <% @project.tickets.each do |ticket| %>
@@ -11,7 +17,7 @@
             <% end %>
           </ul>
         </div>
-        <div id="singleProjectListContainer" class="span2">
+        <div class="span4">
           <label for="singleProjectMemberList">Project members</label>
           <ul ="singleProjectMemberList" class="inline">
             <% @project.users.each do |user| %>
@@ -19,6 +25,7 @@
             <% end %>
           </ul>
         </div>
+        <%= link_to "Create a new ticket", :controller => "tickets", :action => "new", :id => @project %>
       </div>
     </div>
 </div>

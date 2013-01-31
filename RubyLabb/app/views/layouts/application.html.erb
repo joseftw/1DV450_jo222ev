@@ -14,6 +14,7 @@
   </style>
   <link href="/assets/bootstrap.css" rel="stylesheet" type="text/css">
   <link href="/assets/application.css" rel="stylesheet" type="text/css">
+  <%= yield :head %>
 </head>
 <body>
     
@@ -28,19 +29,18 @@
           <a class="brand" href="#">Project name</a>
           <div class="nav-collapse collapse">
             <ul id="mainMenu" class="nav">
-              <li><a href="/home">Home</a></li>
-              <li><a href="/projects">All projects</a></li>
-              <li><a href="/projects">New project</a></li>
-                  <% if session[:user_id] %>
-                    <li class="white navMargin">Welcome <%= session[:user_first_name] %></li>
-                    <li>
-                      <form action="logout" method="get" class="form-inline navMargin">
-                        <button type="submit">Log out</button>
-                      </form>
-                    </li>
-                    <% else %>
-                    <li class="white navMargin">Not logged in</li>
-                  <% end %>
+              <%= yield :menu%>
+              <% if session[:user_id] %>
+                <li class="white navMargin">Welcome <%= session[:user_first_name] %></li>
+                <li>
+                  <form action="logout" method="get" class="form-inline navMargin">
+                    <button type="submit">Log out</button>
+                  </form>
+                </li>
+                <% else %>
+                <li class="white navMargin">Not logged in</li>
+              <% end %>
+
             </ul>
             <form class="navbar-form pull-right">
               <input class="span2" type="text" placeholder="Search">
@@ -51,7 +51,10 @@
       </div>
     </div>
     
-    
+<div id="messageDiv" class="<%= yield :alertClass %>">
+  <%= yield :message %>
+</div>
+
 <div class="container">
 
   <%= yield %>
