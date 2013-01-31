@@ -16,9 +16,10 @@
           <%= f.text_field :description %>
           
           <%= f.label :start_date %>
-          <%= f.text_field :start_date %>
+          <span class="dateInput"><%= f.date_select :start_date %></span>
+          
           <%= f.label :end_date %>
-          <%= f.text_field :end_date %>
+          <span class="dateInput"><%= f.date_select :end_date %></span>
           
           <%= f.submit "Add project" %>
         </fieldset>

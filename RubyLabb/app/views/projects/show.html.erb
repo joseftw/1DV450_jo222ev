@@ -7,6 +7,7 @@
 <div class="row">
     <div class="span10 gradientGray">
       <h2><%= @project.name %></h2>
+      <p><strong><%= @project.start_date.strftime("%Y-%m-%d") %></strong> to <strong><%= @project.end_date.strftime("%Y-%m-%d") %></strong></p>
       <p id="singleProjectDescription"><%= @project.description %></p>
       <div class="row">
         <div class="span4">
@@ -25,7 +26,17 @@
             <% end %>
           </ul>
         </div>
-        <%= link_to "Create a new ticket", :controller => "tickets", :action => "new", :id => @project %>
       </div>
     </div>
+</div>
+<div class="row">
+  <div class="span10">
+    <ul class="inline">
+    <% if @project.user_id == session[:user_id] %>
+      <li><%= button_to "Delete project", {:controller => "projects", :action => 'destroy', :id => @project.id}, :method => :delete, :class => "btn btn-danger" %></li>
+      <li><%= button_to "Edit project", {:controller => "projects", :action => 'edit', :id => @project.id}, :method => :put, :class => "btn btn-warning" %></li>
+    <% end %> 
+    <li><%= button_to "Create a new ticket", {:controller => "tickets", :action => "new", :id => @project}, :class => "btn btn-info" %></li>
+    </ul>
+  </div>
 </div>
