@@ -7,22 +7,7 @@
     <div class="span10 gradientGray">
       <h2>Add a new project</h2>
       
-      <%= form_for @project do |f| %>
-        <fieldset>
-          <%= f.label :name %>
-          <%= f.text_field :name %>
-          
-          <%= f.label :description %>
-          <%= f.text_field :description %>
-          
-          <%= f.label :start_date %>
-          <span class="dateInput"><%= f.date_select :start_date %></span>
-          
-          <%= f.label :end_date %>
-          <span class="dateInput"><%= f.date_select :end_date %></span>
-          
-          <%= f.submit "Add project" %>
-        </fieldset>
-      <% end %>
+      <%= render :partial => "shared/projectForm" %>
+      
   </div>
 </div>

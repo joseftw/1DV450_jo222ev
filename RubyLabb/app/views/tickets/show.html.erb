@@ -1,30 +1,25 @@
+<% content_for :menu do %>
+  <li><a href="/home">Home</a></li>
+  <li><a href="/projects">All projects</a></li>
+  <li><a href="/projects/new">New project</a></li>
+<% end %>
+
 <div class="row">
   <div class="span12 gradientGray">
-    <h1><i>Tickets for project "<%= @tickets.first.project.name %>"</i></h1>
-        <% @tickets.each_with_index do |ticket, index| %>
-        <% if index % 3 == 0 %>
-            <div class="row">
-             <div class="span4 ticketDiv">
-               <h3 class="pagination-centered"><%= ticket.name %></h3>
-               <p class="pull-left"><%= ticket.user.first_name + " " + ticket.user.last_name %></p>
-               <% cssClass = ticket.status.status_name.downcase %>
-               <% cssClass = cssClass.gsub /\s+/, '-' %>
-               <p class="<%= cssClass %> right"><%= ticket.status.status_name %></p>
-               <p><%= ticket.description  %></p>
-            </div> 
-          <% else %>
-            <div class="span4 ticketDiv">
-             <h3 class="pagination-centered"><%= ticket.name %></h3>
-              <p class="pull-left"><%= ticket.user.first_name + " " + ticket.user.last_name %></p>
-              <% cssClass = ticket.status.status_name.downcase %>
-              <% cssClass = cssClass.gsub /\s+/, '-' %>
-              <p class="<%= cssClass %> right"><%= ticket.status.status_name %></p>
-             <p><%= ticket.description  %></p>
-            </div>
-            <% if index % 2 == 0 %>
-              </div>
-            <% end %>
-          <% end %>
-        <% end %>
+    <h1>Ticket created by <%= @user.first_name + " " +@user.last_name%></h1>
+    <h3><%= @ticket.name %> </h3>
+    <p> <%= @ticket.description %></p>
+    <% cssClass = @status.status_name.gsub(/ /, '-').downcase %>
+    <p>Status:  <span class="<%= cssClass %>"><%= @status.status_name %></span></p>
   </div>
 </div>
+  <div class="row">
+    <div class="span12">
+    <ul class="inline">
+    <li><%= link_to "Back to project", {:controller => "projects", :action => "show", :id => @project.id}, :class => "btn btn-info" %></li>
+    <% if @ticket.user_id == session[:user_id] || session[:user_id] = @project.user_id %>
+      <li><%= button_to "Delete ticket", {:controller => "tickets", :action => 'destroy', :id => @ticket.id}, :method => :delete, :class => "btn btn-danger" %></li>
+    <% end %>
+    </ul>
+    </div>
+  </div>

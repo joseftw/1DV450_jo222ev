@@ -56,6 +56,7 @@ RubyLabb::Application.routes.draw do
   root :to => 'projects#index'
   match "login", to: "sessions#login"
   match "logout", to: "sessions#logout"
+  match "/projects/:id/tickets" => "tickets#show"
 
   # See how all your routes lay out with "rake routes"
 

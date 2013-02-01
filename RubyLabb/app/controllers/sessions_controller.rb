@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       #Spara i session
       session[:user_id] = user.id
       session[:user_first_name] = user.first_name
-      flash[:notice] = "COOLT"
+      flash[:notice] = "Welcome " + user.first_name
       redirect_to(:controller => 'projects')
     else
       flash[:notice] = "Invalid email or password"
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
   end
   
   def logout
-    session[:user_id]  = nil
+    reset_session
     flash[:notice] = "You have successfully logged out"
     redirect_to :action => "login"
   end

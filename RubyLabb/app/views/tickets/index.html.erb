@@ -1,0 +1,30 @@
+<% content_for :menu do %>
+  <li><a href="/home">Home</a></li>
+  <li class="active"><a href="/projects">All projects</a></li>
+  <li><a href="/projects/new">New project</a></li>
+<% end %>
+
+<div class="row">
+  <div class="span12 gradientGray">
+    <h1>All tickets for <%= @project.name%></h1>
+    <% @tickets.each_with_index do |ticket,index|%>
+        <% if index %3 == 0 %>
+          <div class="row">
+            <div class="span4">
+              <%= link_to ticket.name, ticket_path(ticket) %>
+              <% cssClass = Status.find(ticket.status.id).status_name.downcase.gsub(/ /, '-') %>
+              <p class="<%= cssClass %> center"><%= status = Status.find(ticket.status.id).status_name %>
+            </div>
+        <% else %>
+          <div class="span4">
+            <%= link_to ticket.name, ticket_path(ticket) %>
+            <% cssClass = Status.find(ticket.status.id).status_name.downcase.gsub(/ /, '-') %>
+            <p class="<%= cssClass %> center"><%= status = Status.find(ticket.status.id).status_name %>
+          </div>
+          <% if index %2 == 0%>
+            </div>
+          <% end %>
+        <% end %>
+    <% end %>
+  </div>
+</div>

@@ -16,8 +16,7 @@
   <link href="/assets/application.css" rel="stylesheet" type="text/css">
   <%= yield :head %>
 </head>
-<body>
-    
+<body> 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -31,10 +30,9 @@
             <ul id="mainMenu" class="nav">
               <%= yield :menu%>
               <% if session[:user_id] %>
-                <li class="white navMargin">Welcome <%= session[:user_first_name] %></li>
                 <li>
-                  <form action="logout" method="get" class="form-inline navMargin">
-                    <button type="submit">Log out</button>
+                  <form action="/logout" method="get" class="form-inline">
+                    <button type="submit" class="btn btn-danger">Log out</button>
                   </form>
                 </li>
                 <% else %>

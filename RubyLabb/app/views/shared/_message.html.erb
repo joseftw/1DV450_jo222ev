@@ -1,0 +1,18 @@
+<% #Basic felhantering med rätt och felmeddelande styling. %>
+<% content_for :message do %>
+  <% if flash[:notice] %>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <%= flash[:notice] %>  
+    <% content_for :alertClass do%>
+      alert alert-success
+    <% end %>
+  <% end %>
+
+  <% if flash[:error] %>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <%= flash[:error] %>  
+    <% content_for :alertClass do%>
+      alert alert-error
+    <% end %>  
+  <% end %>
+<% end %>
