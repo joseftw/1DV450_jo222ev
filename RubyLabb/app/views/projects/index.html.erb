@@ -9,23 +9,38 @@
 <div class="row">  
   <div id="mainDiv" class="span12 gradientGray">
     <h1>All projects</h1>
-      <% @projects.each_with_index do |project, index| %>
-        <% if index%3 == 0 %>
-          <div class="row">
-        <% end %>
-            <div class="span4 projectDiv">
-              <h3><%= link_to project.name, project_path(project)%></h3>
-              <p class="creator"><%= link_to User.find(project.user_id).first_name, user_path(User.find(project.user_id))%></p>
-              <p class="description"> 
-                <% first_30_words = project.description.split(" ").first(30).join(" ") %>
-                <%= first_30_words%>
-                <%= link_to "[...]", project_path(project)%>
-              </p>
+      <% if @projects.count > 0 %>
+        <% @projects.each_with_index do |project, index| %>
+          <% if index%3 == 0 %>
+            <div class="row">
+          <% end %>
+              <div class="span4 projectDiv">
+                <h3><%= link_to project.name, project_path(project)%></h3>
+                <p class="creator"><%= link_to User.find(project.user_id).first_name, user_path(User.find(project.user_id))%></p>
+                <p class="description"> 
+                  <% first_30_words = project.description.split(" ").first(30).join(" ") %>
+                  <%= first_30_words%>
+                  <%= link_to "[...]", project_path(project)%>
+                </p>
+              </div>
+          <% if index%3 == 2%>
             </div>
-        <% if index%3 == 2%>
-          </div>
-        <% end %>      
-
+          <% end %>      
+  
+          <% end %>
+        <% else %>
+        <p>No projects found...lazy co-workers? </p>
       <% end %>
   </div>
+  <% if @tickets.count > 0%>
+    <hr>
+    <div class="span12">
+      <h3>Showing all critical tickets</h3>
+      <ul class="inline">
+        <% @tickets.each do |ticket|%>
+          <li><%= link_to ticket.name, ticket_path(ticket)%></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 </div>

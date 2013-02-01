@@ -4,7 +4,8 @@ class ProjectsController < ApplicationController
   def index
       user_id = session[:user_id]
       @projects = Project.all
-      @user = User.find(user_id) 
+      @user = User.find(user_id)
+      @tickets = Ticket.all(:conditions => { :status_id => [2] })
   end
   
   def show
