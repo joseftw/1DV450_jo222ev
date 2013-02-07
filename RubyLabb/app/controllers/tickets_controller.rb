@@ -48,4 +48,20 @@ class TicketsController < ApplicationController
 
   end
   
+  def edit
+    @ticket = Ticket.find(params[:id])
+  end
+  
+  def update
+    @ticket = Ticket.find(params[:id])
+    if @ticket.update_attributes(params[:project])
+      flash[:notice] = "Ticket saved."
+      redirect_to :controller=> "projects", :action => "show", :id => @ticket.project_id
+    else
+      render :action => "edit"
+    end
+    
+  end
+
+  
 end

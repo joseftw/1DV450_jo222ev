@@ -7,45 +7,51 @@
 <%= render :partial => "shared/message" %>
 
 <div class="row">
-    <div class="span10 gradientGray">
-      <h2><%= @project.name %></h2>
-      <p><strong><%= @project.start_date.strftime("%Y-%m-%d") %></strong> to <strong><%= @project.end_date.strftime("%Y-%m-%d") %></strong></p>
-      <p id="singleProjectDescription"><%= @project.description %></p>
+    <div class="span12 gradientGray">
+        <h2><%= @project.name %></h2>
+        <p>Project owner: <%= link_to user = (User.find(@project.user_id).first_name), user_path(User.find(@project.user_id)) %></p>
+        <p><strong><%= @project.start_date.strftime("%Y-%m-%d") %></strong> to <strong><%= @project.end_date.strftime("%Y-%m-%d") %></strong></p>
+        <p id="singleProjectDescription"><%= @project.description %></p>
+    <hr>
       <div class="row">
-        <div class="span4">
-          <label for="singleProjectTicketList">Project tickets</label>
-          <%= link_to "Show all tickets", :controller => "tickets", :action => "index", :id => @project.id %>
-          <ul ="singleProjectTicketList" class="inline">
-            <% @project.tickets.each do |ticket| %>
-              <li><%= link_to ticket.name, :controller => "tickets", :action => "show", :id => ticket.id %></li>
-            <% end %>
-          </ul>
-        </div>
-        <div class="span4">
-          <label for="singleProjectMemberList">Project members</label>
-          <ul ="singleProjectMemberList" class="inline">
-            <% @project.users.each do |user| %>
-              <li><%= link_to user.first_name, user_path(user) %></li>
-            <% end %>
-          </ul>
+        <div class="span12">
+          <h2><strong>Details</strong></h2>
+          <div id="projectFirst" class="span5 projectInfoDiv">
+            <h4>Members</h4>
+            <ul class="inline">
+              <% @project.users.each do |user| %>
+                <% fullName = user.first_name + " " + user.last_name %>
+                <li><%= link_to fullName, user_path(user) %></li>
+              <% end %>
+            </ul>
+          </div>
+          <div id="projectSecond" class="span5 projectInfoDiv offset1">
+            <h4>Tickets <span class="allTickets"><%= link_to "Show all tickets", :controller => "tickets", :action => "index", :id => @project.id %></span></h4>
+            <ul class="inline">
+              <% @project.tickets.each do |ticket| %>
+                <li><%= link_to ticket.name, :controller => "tickets", :action => "show", :id => ticket.id %></li>
+              <% end %>
+            </ul>
+          </div>
         </div>
       </div>
+    <hr>
+    <div class="row">
+      <div class="span12">
+        <ul class="inline">
+          <li><%= link_to "Back", {:controller => "projects", :action => "index"}, :class => "btn btn-info" %></li>
+          <% members = @project.users%>
+          <% if @project.user_id == session[:user_id] %>
+            <li><%= button_to "Delete", {:controller => "projects", :action => 'destroy', :id => @project.id}, :method => :delete, :class => "btn btn-danger" %></li>
+            <li><%= button_to "Edit", {:controller => "projects", :action => 'edit', :id => @project.id}, :method => :get, :class => "btn btn-warning" %></li>
+          <% end %>
+          <% if members.include?(User.find(session[:user_id])) %>
+            <li><%= button_to "New ticket", {:controller => "tickets", :action => 'new', :id => @project.id}, :class => "btn btn-success" %></li>
+          <% else %>
+            <li><%= button_to "Join", {:controller => "projects", :action => 'join', :id => @project.id}, :method => :put, :class => "btn btn-success" %></li>
+          <% end%>
+        </ul>
+      </div>
     </div>
-</div>
-<div class="row">
-  <div class="span10">
-    <ul class="inline">
-      <li><%= link_to "Back", {:controller => "projects", :action => "index"}, :class => "btn btn-info" %></li>
-      <% members = @project.users%>
-      <% if @project.user_id == session[:user_id] %>
-        <li><%= button_to "Delete", {:controller => "projects", :action => 'destroy', :id => @project.id}, :method => :delete, :class => "btn btn-danger" %></li>
-        <li><%= button_to "Edit", {:controller => "projects", :action => 'edit', :id => @project.id}, :method => :get, :class => "btn btn-warning" %></li>
-      <% end %>
-      <% if members.include?(User.find(session[:user_id])) %>
-        <li><%= button_to "New ticket", {:controller => "tickets", :action => 'new', :id => @project.id}, :class => "btn btn-success" %></li>
-      <% else %>
-        <li><%= button_to "Join", {:controller => "projects", :action => 'join', :id => @project.id}, :method => :put, :class => "btn btn-success" %></li>
-      <% end%>
-    </ul>
   </div>
 </div>

@@ -1,0 +1,17 @@
+---
+applications:
+  .:
+    name: josef
+    framework:
+      name: rails3
+      info:
+        mem: 256M
+        description: Rails Application
+        exec: 
+    infra: eu-aws
+    url: josef.eu01.aws.af.cm
+    mem: '128'
+    instances: 1
+    services:
+      josef-mysql-40917:
+        type: mysql

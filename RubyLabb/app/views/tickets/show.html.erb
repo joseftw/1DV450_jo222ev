@@ -17,8 +17,12 @@
     <div class="span12">
     <ul class="inline">
     <li><%= link_to "Back to project", {:controller => "projects", :action => "show", :id => @project.id}, :class => "btn btn-info" %></li>
-    <% if @ticket.user_id == session[:user_id] || session[:user_id] = @project.user_id %>
-      <li><%= button_to "Delete ticket", {:controller => "tickets", :action => 'destroy', :id => @ticket.id}, :method => :delete, :class => "btn btn-danger" %></li>
+    <% if @ticket.user_id == session[:user_id] || session[:user_id] == @project.user_id %>
+      <% if session[:user_id] == @ticket.user_id || session[:user_id] == Project.find(@ticket.project_id).user_id %>
+        <li><%= button_to "Delete ticket", {:controller => "tickets", :action => 'destroy', :id => @ticket.id}, :method => :delete, :class => "btn btn-danger" %></li>
+        <li><%= button_to "Edit ticket", {:controller => "tickets", :action => 'edit', :id => @ticket.id}, :method => :get, :class => "btn btn-warning" %></li>
+
+      <% end %>
     <% end %>
     </ul>
     </div>
