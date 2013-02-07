@@ -21,7 +21,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(params[:ticket])
     @ticket.user_id = session[:user_id]
     if @ticket.save
-      redirect_to :controller => "projects", :action => "show", :id => @ticket.project_id
+      redirect_to projects_path
     else
       render :action => 'new'
     end
@@ -49,12 +49,14 @@ class TicketsController < ApplicationController
   end
   
   def edit
+    
     @ticket = Ticket.find(params[:id])
   end
   
   def update
+    
     @ticket = Ticket.find(params[:id])
-    if @ticket.update_attributes(params[:project])
+    if @ticket.update_attributes(params[:ticket])
       flash[:notice] = "Ticket saved."
       redirect_to :controller=> "projects", :action => "show", :id => @ticket.project_id
     else
