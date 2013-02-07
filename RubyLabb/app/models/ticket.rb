@@ -3,7 +3,7 @@ class Ticket < ActiveRecord::Base
   belongs_to :project
   belongs_to :status
   
-  attr_accessible :name, :description, :status_id, :project_id
+  attr_accessible :name, :description, :status_id, :project_id, :ticket_id
   
   validates_presence_of :name, :description
   

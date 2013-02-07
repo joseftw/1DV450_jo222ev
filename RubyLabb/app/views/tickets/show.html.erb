@@ -20,8 +20,7 @@
     <% if @ticket.user_id == session[:user_id] || session[:user_id] == @project.user_id %>
       <% if session[:user_id] == @ticket.user_id || session[:user_id] == Project.find(@ticket.project_id).user_id %>
         <li><%= button_to "Delete ticket", {:controller => "tickets", :action => 'destroy', :id => @ticket.id}, :method => :delete, :class => "btn btn-danger" %></li>
-        <li><%= button_to "Edit ticket", {:controller => "tickets", :action => 'edit', :id => @ticket.id}, :method => :get, :class => "btn btn-warning" %></li>
-
+        <li><%= link_to "Edit ticket", "/projects/" + @ticket.project_id.to_s + "/tickets/" + @ticket.id.to_s + "/edit" %></li>
       <% end %>
     <% end %>
     </ul>

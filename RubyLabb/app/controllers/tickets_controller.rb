@@ -50,7 +50,7 @@ class TicketsController < ApplicationController
   
   def edit
     
-    @ticket = Ticket.find(params[:id])
+    @ticket = Ticket.find(params[:ticket_id])
   end
   
   def update
