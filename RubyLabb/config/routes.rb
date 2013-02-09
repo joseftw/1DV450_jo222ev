@@ -17,7 +17,6 @@ RubyLabb::Application.routes.draw do
   resources :users
   resources :tickets
   resources :home
-  resources :sessions
   # Sample resource route with options:
   #   resources :products do
   #     member do

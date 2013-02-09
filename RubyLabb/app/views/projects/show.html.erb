@@ -46,7 +46,7 @@
             <li><%= button_to "Edit", {:controller => "projects", :action => 'edit', :id => @project.id}, :method => :get, :class => "btn btn-warning" %></li>
           <% end %>
           <% if members.include?(User.find(session[:user_id])) %>
-            <li><%= link_to "New ticket", "/projects/" + @project.id.to_s + "/tickets/create" %></li>
+            <li><%= link_to "New ticket", "/projects/" + @project.id.to_s + "/tickets/create", :class => "btn btn-success" %></li>
           <% else %>
             <li><%= button_to "Join", {:controller => "projects", :action => 'join', :id => @project.id}, :method => :put, :class => "btn btn-success" %></li>
           <% end%>

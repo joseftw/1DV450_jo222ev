@@ -21,7 +21,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(params[:ticket])
     @ticket.user_id = session[:user_id]
     if @ticket.save
-      redirect_to projects_path
+      redirect_to session[:return_to]
     else
       render :action => 'new'
     end
@@ -30,17 +30,19 @@ class TicketsController < ApplicationController
   end
   
   def new
+    session[:return_to] ||= request.referer
     @ticket = Ticket.new
   end
   
   def destroy
+    session[:return_to] ||= request.referer
     #Kolla så att inloggad användare stämmer överrens med ägaren.
     @ticket = Ticket.find(params[:id])
     @project = Project.find(@ticket.project_id) 
     if @ticket.user_id == session[:user_id] || session[:user_id] == @project.user_id
        @ticket.destroy()
       flash[:notice] = "The ticket has been removed"
-      redirect_to projects_path
+      redirect_to session[:return_to]
     else
       flash[:error] = "The ticket couldn't be removed, are you sure you are the owner?"
       render :action => 'index'
@@ -49,7 +51,6 @@ class TicketsController < ApplicationController
   end
   
   def edit
-    
     @ticket = Ticket.find(params[:ticket_id])
   end
   
