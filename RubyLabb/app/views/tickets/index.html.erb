@@ -17,6 +17,11 @@
           <h3><%= link_to ticket.name, ticket_path(ticket) %></h3>
           <% cssClass = Status.find(ticket.status.id).status_name.downcase.gsub(/ /, '-') %>
           <p class="<%= cssClass %>"><%= status = Status.find(ticket.status.id).status_name %> </p>
+          <p class="description"> 
+            <% first_30_words = ticket.description.split(" ").first(30).join(" ") %>
+              <%= first_30_words%>
+              <%= link_to "[...]", ticket_path(ticket)%>
+            </p>
         </div>
          <% if index%3 == 2%>
             </div>
