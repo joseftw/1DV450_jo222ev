@@ -53,6 +53,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "The project couldn't be edited, are you sure you are the owner?"
       render :action => 'projects', :action => "show", :id => @project.id
+    end
   end
   
   def update
@@ -79,5 +80,4 @@ class ProjectsController < ApplicationController
     
   end
 
-end
 end

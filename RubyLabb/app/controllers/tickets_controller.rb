@@ -70,7 +70,8 @@ class TicketsController < ApplicationController
   
   def edit
     @ticket = Ticket.find(params[:ticket_id])
-    if @ticket.user_id == session[:user_id]
+    @project = Project.find(@ticket.project_id)
+    if @ticket.user_id == session[:user_id] || @project.user_id == session[:user_id]
 
     else
       flash[:error] = "The ticket couldn't be edited, are you sure you are the owner?"
