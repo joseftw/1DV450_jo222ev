@@ -5,6 +5,8 @@
   <li><a href="/users">Users</a></li>
 <% end %>
 
+<%= render :partial => "shared/message" %>
+
 <div class="row">
   <div class="span12 gradientGray">
     <h1>Ticket created by <%= @user.first_name + " " +@user.last_name%></h1>

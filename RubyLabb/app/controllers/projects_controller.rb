@@ -48,6 +48,11 @@ class ProjectsController < ApplicationController
   
   def edit
     @project = Project.find(params[:id])
+    if @project.user_id == session[:user_id]
+
+    else
+      flash[:error] = "The project couldn't be edited, are you sure you are the owner?"
+      render :action => 'projects', :action => "show", :id => @project.id
   end
   
   def update
@@ -74,4 +79,5 @@ class ProjectsController < ApplicationController
     
   end
 
+end
 end

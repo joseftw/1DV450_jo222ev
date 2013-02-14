@@ -52,6 +52,12 @@ class TicketsController < ApplicationController
   
   def edit
     @ticket = Ticket.find(params[:ticket_id])
+    if @ticket.user_id == session[:user_id]
+
+    else
+      flash[:error] = "The ticket couldn't be edited, are you sure you are the owner?"
+      redirect_to :controller=> "tickets", :action => "show", :id => @ticket.id
+    end
   end
   
   def update
