@@ -1,3 +1,9 @@
+<% content_for :menu do %>
+  <li><a href="/home">Home</a></li>
+  <li><a href="/projects">All projects</a></li>
+  <li><a href="/projects/new">New project</a></li>
+  <li class="active"><a href="/users">Users</a></li>
+<% end %>
 <div class="row">
     <div class="span10 gradientGray">
       <h2><%= @User.first_name + " " + @User.last_name %></h2>

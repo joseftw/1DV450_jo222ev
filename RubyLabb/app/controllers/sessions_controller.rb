@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "Welcome " + user.first_name
       redirect_to(:controller => 'projects')
     else
-      flash[:notice] = "Invalid email or password"
+      flash[:error] = "Invalid email or password"
       flash[:color] = "Invalid"
       render "login"
     end

@@ -1,9 +1,8 @@
 class HomeController < ApplicationController
-
-def index
-  
-  #Hämta user ifrån session, om den inte finns, logga in.
-  
-end
+  #Kontrollerar inloggningen
+  before_filter :check_login
+  def index
+     
+  end
 
 end
