@@ -16,7 +16,6 @@ RubyLabb::Application.routes.draw do
   resources :projects
   resources :users
   resources :tickets
-  resources :home
   # Sample resource route with options:
   #   resources :products do
   #     member do
@@ -58,6 +57,7 @@ RubyLabb::Application.routes.draw do
   match "/projects/:id/tickets" => "tickets#show"
   match "/projects/:id/tickets/create" => "tickets#new"
   match "/projects/:id/tickets/:ticket_id/edit" => "tickets#edit"
+  match "/home" => "home#index"
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
