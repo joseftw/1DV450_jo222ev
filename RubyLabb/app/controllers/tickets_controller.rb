@@ -32,6 +32,24 @@ class TicketsController < ApplicationController
   def new
     session[:return_to] ||= request.referer
     @ticket = Ticket.new
+    @project = Project.find(params[:id])
+    @members = @project.users
+    @user = User.find(session[:user_id])
+    isMember = false
+    if @project.user_id == @user.id
+
+    else
+      @members.each do |member|
+        if member.id == @user.id
+          isMember = true
+          break
+        end
+      end
+     end
+     if isMember != true
+      flash[:error] = "The ticket couldn't be created, are you sure you are a member?"
+      redirect_to :controller=> "projects", :action => "show", :id => @project.id
+     end 
   end
   
   def destroy
