@@ -39,7 +39,8 @@
       <h3>Showing all critical tickets</h3>
       <ul class="inline">
         <% @tickets.each do |ticket|%>
-          <li><%= link_to ticket.name, ticket_path(ticket)%></li>
+          <% cssClass = ticket.status.status_name.gsub(/ /, '-').downcase %>
+          <li><%= link_to ticket.name, ticket_path(ticket), :class => cssClass%></li>
         <% end %>
       </ul>
     </div>

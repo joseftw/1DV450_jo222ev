@@ -21,7 +21,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(params[:ticket])
     @ticket.user_id = session[:user_id]
     if @ticket.save
-      redirect_to session[:return_to]
+      redirect_to :controller=> "projects", :action => "show", :id => @ticket.project_id
     else
       render :action => 'new'
     end

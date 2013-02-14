@@ -30,7 +30,8 @@
             <h4>Tickets <span class="allTickets"><%= link_to "Show all tickets", :controller => "tickets", :action => "index", :id => @project.id %></span></h4>
             <ul class="inline">
               <% @project.tickets.each do |ticket| %>
-                <li><%= link_to ticket.name, :controller => "tickets", :action => "show", :id => ticket.id %></li>
+              <% cssClass = ticket.status.status_name.gsub(/ /, '-').downcase %>
+                <li><%= link_to ticket.name, {:controller => "tickets", :action => "show", :id => ticket.id} , :class => cssClass %></li>
               <% end %>
             </ul>
           </div>

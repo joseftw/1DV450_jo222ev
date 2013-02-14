@@ -8,12 +8,22 @@
 <div class="row">
   <div class="span12 gradientGray">
     <h1>All tickets for <%= @project.name%></h1>
-    <% @tickets.each do |ticket|%>
-      <div class="span2">
-        <%= link_to ticket.name, ticket_path(ticket) %>
-        <% cssClass = Status.find(ticket.status.id).status_name.downcase.gsub(/ /, '-') %>
-        <p class="<%= cssClass %> center"><%= status = Status.find(ticket.status.id).status_name %> </p>
-      </div>
-    <% end %>
+    <% if @tickets.count > 0 %>
+      <% @tickets.each_with_index do |ticket, index|%>
+        <% if index%3 == 0 %>
+            <div class="row">
+        <% end %>
+        <div class="span4 projectDiv">
+          <h3><%= link_to ticket.name, ticket_path(ticket) %></h3>
+          <% cssClass = Status.find(ticket.status.id).status_name.downcase.gsub(/ /, '-') %>
+          <p class="<%= cssClass %>"><%= status = Status.find(ticket.status.id).status_name %> </p>
+        </div>
+         <% if index%3 == 2%>
+            </div>
+        <% end %>  
+      <% end %>
+    <% else %>
+        <p>No tickets found...lazy co-workers? </p>
+      <% end %>
   </div>
 </div>
