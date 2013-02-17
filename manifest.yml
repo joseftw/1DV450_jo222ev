@@ -1,0 +1,21 @@
+---
+applications:
+  .:
+    name: RubyLabb
+    framework:
+      name: standalone
+      info:
+        mem: 64M
+        description: Standalone Application
+        exec: 
+    runtime: ruby193
+    command: 
+    infra: eu-aws
+    url: 
+    mem: '128'
+    instances: 1
+    services:
+      josef-mysql-40917:
+        type: mysql
+      mysql-fe799:
+        type: mysql
