@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      {% block title %}
+        ASPMS
+      {% endblock %}
+    </title>
+    <style type="text/css">
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+    }
+    .sidebar-nav {
+      padding: 9px 0;
+    }
+  </style>
+    {% block stylesheet %}
+      <link href="{{ STATIC_URL }}bootstrap.css" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}application.css" />
+    {% endblock %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/home">AMPMS</a>
+          <div class="nav-collapse collapse">
+            <ul id="mainMenu" class="nav">
+              {% block menu%}
+
+              {% endblock %}
+            </ul>
+            <form class="navbar-form pull-right">
+              <input class="span2" type="text" placeholder="Search">
+              <button type="submit" class="btn">Search</button>
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      {% block content %}
+
+      {% endblock %}
+      <footer>
+      </footer>
+    </div>
+  </body>
+</html>

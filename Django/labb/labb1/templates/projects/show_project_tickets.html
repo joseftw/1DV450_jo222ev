@@ -1,0 +1,20 @@
+{% extends 'shared/base.html' %}
+{% block title %}
+  Tickets for project
+{% endblock %}
+{% block content%}
+<div class="row">
+  <div class="span12 gradientGray">
+    <h1>Tickets for {{ project.name}}</h1>
+    <div class="row">
+    {% for ticket in tickets %}
+      <div class="span4 ticketsDiv">
+        <h3>{{ ticket.name }}</h3>
+        <p>{{ ticket.description}}</p>
+        <p class="{{ ticket.status.status_name.split|join:"-"|lower }}">{{ticket.status.status_name}}</p>            
+      </div>
+    {% endfor %}
+  </div>
+  </div>
+</div>
+{% endblock %}

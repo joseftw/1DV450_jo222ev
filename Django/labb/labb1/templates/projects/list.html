@@ -1,0 +1,40 @@
+{% extends 'shared/base.html' %}
+{% block title %}
+  All projects
+{% endblock %}
+{% block content%}
+
+<div class="row">  
+  <div id="mainDiv" class="span12 gradientGray">
+    <h1>All projects</h1>
+        {% for project in projects %}
+          {% if forloop.counter0|divisibleby:"3" %}
+            <div class="row">
+          {% endif %}
+          <div class="span4 projectDiv">
+            <h3><a href="{% url project_show project.id%}">{{ project.name }}</a></h3>
+                  <p class="created">{{ project.date_added}}</p>
+                  <p class="creator">{{ project.owner.get_full_name}}</p>
+                  <p class="description"> 
+                      {{ project.description }}
+                  </p>
+                  
+          </div>
+          {% if forloop.counter|divisibleby:3 %}
+          </div>
+          {% endif %}
+        {% endfor %}
+        
+      </div>
+    <hr>
+    <div class="span12">
+      <h3>Showing all critical tickets</h3>
+      <ul class="inline">
+        {% for ticket in tickets %}
+          <li><a href="{{ ticket.id}}">{{ticket.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+</div>
+<h1></h1>
+{% endblock %}
