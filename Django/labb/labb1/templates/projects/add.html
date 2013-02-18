@@ -5,6 +5,6 @@
 {% block content%}
 <form action="/projects/add" method="POST"> {% csrf_token %}
  {{ form.as_p}} 
- <input type="submit" value="Logga in" />
+ <input type="submit" value="Add project" />
 </form>
 {% endblock %}

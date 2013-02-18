@@ -1,5 +1,7 @@
 from django.db import models
+from django.utils.encoding import iri_to_uri
 from django.forms import ModelForm
+from django import forms
 from django.contrib.auth.models import User
 
 class Project(models.Model):
@@ -36,6 +38,10 @@ class Ticket(models.Model):
 class ProjectForm(ModelForm):
   class Meta:
     model = Project
+
+class LoginForm(forms.Form):
+  username = forms.CharField(max_length = 30)
+  password = forms.CharField(max_length = 30, widget = forms.PasswordInput)
 
 class StatusForm(ModelForm):
   class Meta:

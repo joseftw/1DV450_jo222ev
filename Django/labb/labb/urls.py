@@ -12,6 +12,10 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # First - url to match, second = path to view
+    
+    url(r'^login/$', 'labb1.views.login_user', name="login"),
+    url(r'^logout/$', 'labb1.views.logout_user', name="logout"),
+
     url(r'^projects/$', 'labb1.views.project_list', name="project_list"),
     url(r'^projects/(?P<project_id>\d+)/$', 'labb1.views.project_show', name="project_show"),
     url(r'^projects/(?P<project_id>\d+)/delete/$', 'labb1.views.project_delete', name="project_delete"),

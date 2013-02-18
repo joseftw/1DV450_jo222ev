@@ -1,5 +1,36 @@
-from django.shortcuts import get_list_or_404, render
-from labb1.models import Project, Ticket, Status, ProjectForm
+from django.shortcuts import get_list_or_404, render, get_object_or_404, render, redirect
+from labb1.models import Project, Ticket, Status, ProjectForm, LoginForm
+from django.contrib.auth import authenticate, login, logout
+import datetime
+from django.contrib.auth.decorators import login_required, permission_required
+from django.http import HttpResponse
+
+def login_user(request):
+  message = ''
+  if(request.method == "POST"):
+
+    form = LoginForm(request.POST)
+    if form.is_valid():
+      username_to_try = form.cleaned_data["username"]
+      password_to_try = form.cleaned_data["password"]
+
+      user = authenticate(username = username_to_try, password = password_to_try)
+     
+      if user is not None:
+        if user.is_active:
+          login(request, user)
+          return redirect("project_list")
+        else:
+          return HttpResponse("<h1>Your account is disabled</h1>")
+      else:
+        message = "Wrong username and/or password"
+  else:
+    form = LoginForm()
+  return render(request, "login/login.html", {'form' : form, 'message' : message})
+
+def logout_user(request):
+  logout(request)
+  return redirect('project_list')
 
 def project_list(request):
   projects = get_list_or_404(Project.objects.order_by('name'))
@@ -68,3 +99,8 @@ def project_delete_ticket(request, ticket_id):
   ticket = get_object_or_404(Ticket, pk=ticket_id)
   ticket.delete();
   return redirect(Ticket.url)
+
+def projects_for_user(request):
+  user = request.user
+  projects = Project.objects.filter(added_by_user = user)
+  return render(request, "projects/list.html", {'projects' : projects, 'headline' : 'Your projects'})

@@ -7,7 +7,6 @@
     <div class="span12 gradientGray">
         <h2>{{ticket.name}}</h2>
         <p id="singleProjectDescription">{{ ticket.description }}</p>
-        <p>Status: <span class="{{ticket.status.status_name.split|join:"-"|lower}}">{{ ticket.status }}</span></p>
     <hr>
       <div class="row">
         <div class="span12">
@@ -21,6 +20,7 @@
           </div>
           <div id="projectSecond" class="span5 projectInfoDiv offset1">
             <h4>Status</h4>
+            <p>Status: <span class="{{ticket.status.status_name.split|join:"-"|lower}}">{{ ticket.status }}</span></p>
             <ul class="inline">
               <li><strong>Created:</strong> {{ticket.date_added}}</li>
               <li><strong>Updated:</strong> {{ticket.date_updated}}</li>

@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/Utv/Django/labb/data.db',                      # Or path to database file if using sqlite3.
+        'NAME': '/Utv/1DV450_jo222ev/Django/labb/data.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -45,7 +45,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/Utv/Django/labb/labb1/media/'
+MEDIA_ROOT = '/Utv/1DV450_jo222ev/Django/labb/labb1/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -68,7 +68,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Utv/Django/labb/labb1/media/css/',
+    '/Utv/1DV450_jo222ev/Django/labb/labb1/media/css/',
 )
 
 # List of finder classes that know how to find static files in
@@ -108,7 +108,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/Utv/Django/labb/labb1/templates"
+    "/Utv/1DV450_jo222ev/Django/labb/labb1/templates"
 )
 
 INSTALLED_APPS = (
