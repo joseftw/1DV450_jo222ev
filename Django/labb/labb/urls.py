@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     
     url(r'^login/$', 'labb1.views.login_user', name="login"),
     url(r'^logout/$', 'labb1.views.logout_user', name="logout"),
+    url(r'^home/$', 'labb1.views.home', name="home"),
 
     url(r'^projects/$', 'labb1.views.project_list', name="project_list"),
     url(r'^projects/(?P<project_id>\d+)/$', 'labb1.views.project_show', name="project_show"),
@@ -25,5 +26,6 @@ urlpatterns = patterns('',
     url(r'^projects/(?P<project_id>\d+)/tickets/$', 'labb1.views.project_show_tickets', name="project_show_tickets"),
     url(r'^projects/(?P<project_id>\d+)/tickets/(?P<ticket_id>\d+)/delete/$', 'labb1.views.project_delete_ticket', name="project_delete_ticket"),
     url(r'^projects/(?P<project_id>\d+)/tickets/(?P<ticket_id>\d+)/edit/$', 'labb1.views.project_edit_ticket', name="project_edit_ticket"),
+    url(r'^projects/(?P<project_id>\d+)/tickets/add/$', 'labb1.views.project_add_ticket', name="project_add_ticket"),
     url(r'^admin/', include(admin.site.urls)),
 )

@@ -2,6 +2,13 @@
 {% block title %}
   All projects
 {% endblock %}
+{% block menu%}
+  <li><a href="/home">Home</a></li>
+  <li class="active"><a href="/projects">All projects</a></li>
+  <li><a href="/projects/add">Add new project</a></li>
+  <li><a href="#">Welcome {{user.first_name}}</a></li>
+  <li><a class="btn-small btn-danger" href="/logout">Log out</a></li>
+{% endblock %}
 {% block content%}
 
 <div class="row">  
@@ -16,7 +23,9 @@
                   <p class="created">{{ project.date_added}}</p>
                   <p class="creator">{{ project.owner.get_full_name}}</p>
                   <p class="description"> 
-                      {{ project.description }}
+                      {% with project.description.split as desc %}
+                        {{ desc|slice:":10"|join:" " }}<a href="{% url project_show project.id %}">[...]</a> 
+                      {% endwith %}
                   </p>
                   
           </div>
@@ -36,5 +45,4 @@
       </ul>
     </div>
 </div>
-<h1></h1>
 {% endblock %}

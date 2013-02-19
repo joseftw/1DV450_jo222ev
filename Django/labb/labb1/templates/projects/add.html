@@ -2,8 +2,13 @@
 {% block title %}
   Create project
 {% endblock %}
+{% block menu%}
+  <li><a href="/home">Home</a></li>
+  <li><a href="/projects">All projects</a></li>
+  <li class="active"><a href="#">Add new project</a></li>
+{% endblock %}
 {% block content%}
-<form action="/projects/add" method="POST"> {% csrf_token %}
+<form action="/projects/add/" method="POST"> {% csrf_token %}
  {{ form.as_p}} 
  <input type="submit" value="Add project" />
 </form>

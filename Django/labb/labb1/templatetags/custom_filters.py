@@ -8,7 +8,6 @@ def creator(project, user):
 
 @register.filter(name = 'member')
 def member(project, user):
-  import pdb; pdb.set_trace()
   users = project.user
   print users
   if user in users: 

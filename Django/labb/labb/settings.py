@@ -111,6 +111,7 @@ TEMPLATE_DIRS = (
     "/Utv/1DV450_jo222ev/Django/labb/labb1/templates"
 )
 
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
