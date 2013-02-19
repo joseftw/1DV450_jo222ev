@@ -19,6 +19,8 @@ def login_user(request):
       if user is not None:
         if user.is_active:
           login(request, user)
+          message = "Welcome" + user.first_name
+          request.session["user_id"] = user.id
           return redirect("project_list")
         else:
           return HttpResponse("<h1>Your account is disabled</h1>")

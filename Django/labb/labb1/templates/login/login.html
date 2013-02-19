@@ -3,6 +3,9 @@
     Log in
   {% endblock %}
   {% block content%}
+  <div id="form_error_summary">
+    <h1><{{ message }}/h1>
+  </div>
     <form action="/login/" method="POST"> {% csrf_token %}
       {{ form.as_p}} 
       <input type="submit" value="Log in" />
