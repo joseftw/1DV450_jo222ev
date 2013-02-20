@@ -8,7 +8,7 @@ def creator(project, user):
 
 @register.filter(name = 'member')
 def member(project, user):
-  members = project.user
+  members = project.user.all()
   if user in members: 
     return True
   return False
@@ -16,3 +16,10 @@ def member(project, user):
 @register.filter(name = 'ticketCreator')
 def ticketCreator(ticket, user):
   return ticket.user == user
+
+@register.filter(name = 'isLoggedIn')
+def isLoggedIn():
+  if request.session["isLoggedIn"]:
+    return True
+  else:
+    return False

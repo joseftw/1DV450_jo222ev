@@ -19,6 +19,7 @@ urlpatterns = patterns('',
 
     url(r'^projects/$', 'labb1.views.project_list', name="project_list"),
     url(r'^projects/(?P<project_id>\d+)/$', 'labb1.views.project_show', name="project_show"),
+    url(r'^projects/(?P<project_id>\d+)/join/$', 'labb1.views.project_join', name="project_join"),
     url(r'^projects/(?P<project_id>\d+)/delete/$', 'labb1.views.project_delete', name="project_delete"),
     url(r'^projects/(?P<project_id>\d+)/edit/$', 'labb1.views.project_edit', name="project_edit"),
     url(r'^projects/add/$', 'labb1.views.project_add', name="project_add"),

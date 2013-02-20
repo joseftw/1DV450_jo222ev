@@ -10,8 +10,12 @@
   <li><a class="btn-small btn-danger" href="/logout">Log out</a></li>
 {% endblock %}
 {% block content%}
+{% if perms.labb1.can_add_projects_web %}
   <form action="/projects/add/" method="POST"> {% csrf_token %}
     {{ form.as_p}} 
     <input type="submit" value="Add project" />
   </form>
+{% else %}
+  <p>You are not allowed to add projects</p>
+{% endif %}
 {% endblock %}

@@ -13,8 +13,25 @@ class Project(models.Model):
   date_updated = models.DateField()
   user = models.ManyToManyField(User, related_name="projects")
   owner = models.ForeignKey(User, related_name="project")
+  
+  def owned_by_user(self, user):
+    return self.owner == user
+
+  def member_in_project(self, user):
+    members = self.user.all()
+    if user in members:
+      return True
+    else:
+      return False
+
   def __unicode__(self):
     return self.name
+
+  class Meta:
+    permissions = (
+      ("can_add_projects_web", "Can add projects"),
+      )
+
 
 class Status(models.Model):
   class Meta:
@@ -34,6 +51,9 @@ class Ticket(models.Model):
   date_updated = models.DateField()
   def __unicode__(self):
     return self.name
+
+  def owned_by_user(self, user):
+    return self.user == user
 
 class ProjectForm(ModelForm):
   class Meta:
