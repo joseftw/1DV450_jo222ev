@@ -163,7 +163,7 @@ def ticket_edit(request, project_id, ticket_id):
       form = TicketForm(instance = ticket)
     return render(request, 'tickets/edit.html', {"form" : form, "ticket" : ticket, "project" : project})
   else:
-    messages.error(request, 'You have no permission to delete this ticket.')
+    messages.error(request, 'You have no permission to edit this ticket.')
     return render(request, 'tickets/show.html', {"project" : project, "ticket" : ticket})
   
 def project_delete_ticket(request, project_id, ticket_id):
@@ -171,7 +171,7 @@ def project_delete_ticket(request, project_id, ticket_id):
   ticket = get_object_or_404(Ticket, pk=ticket_id)
   if project.owned_by_user(request.user) or ticket.owned_by_user(request.user):
     ticket.delete();
-    messages.success(request, 'You successfully deleted the ticket.')
+    messages.success(request, 'You have successfully deleted the ticket.')
     return render(request, "projects/show.html", {"project" : project})
   else:
     messages.error(request, 'You have no permission to delete this ticket.')
@@ -190,7 +190,7 @@ def project_add_ticket(request, project_id):
         form.instance.project = Project.objects.get(id = project_id)
         try:
           form.save()
-          messages.success(request, 'You successfully added a ticket!.')
+          messages.success(request, 'You have successfully added a ticket!.')
           tickets = project.tickets
           url = reverse('project_show', kwargs={'project_id': project.id})
           return HttpResponseRedirect(url)
