@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 class Project(models.Model):
   name = models.CharField(max_length = 50)
   description = models.TextField()
-  start_date = models.DateTimeField()
-  end_date = models.DateTimeField()
-  date_added = models.DateTimeField()
-  date_updated = models.DateTimeField()
+  start_date = models.DateField()
+  end_date = models.DateField()
+  date_added = models.DateField()
+  date_updated = models.DateField()
   user = models.ManyToManyField(User, related_name="projects")
   owner = models.ForeignKey(User, related_name="project")
   def __unicode__(self):
@@ -30,8 +30,8 @@ class Ticket(models.Model):
   project = models.ForeignKey(Project, related_name="tickets")
   status = models.ForeignKey(Status, verbose_name="status", related_name="tickets")
   user = models.ForeignKey(User, related_name="tickets")
-  date_added = models.DateTimeField()
-  date_updated = models.DateTimeField()
+  date_added = models.DateField()
+  date_updated = models.DateField()
   def __unicode__(self):
     return self.name
 

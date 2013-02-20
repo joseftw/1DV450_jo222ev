@@ -1,0 +1,17 @@
+{% extends 'shared/base.html' %}
+{% block title %}
+  Create ticket
+{% endblock %}
+{% block menu%}
+  <li><a href="/home">Home</a></li>
+  <li class="active"><a href="/projects">All projects</a></li>
+  <li><a href="/projects/add">Add new project</a></li>
+  <li><a href="#">Welcome {{user.first_name}}</a></li>
+  <li><a class="btn-small btn-danger" href="/logout">Log out</a></li>
+{% endblock %}
+{% block content%}
+<form action="/projects/{{project.id}}/tickets/{{ticket.id}}/edit/" method="POST"> {% csrf_token %}
+ {{ form.as_p}} 
+ <input type="submit" value="Edit ticket" />
+</form>
+{% endblock %}

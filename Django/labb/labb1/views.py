@@ -102,14 +102,30 @@ def ticket_show(request, project_id, ticket_id):
 
   return render(request, 'tickets/show.html', {"project" : project, "ticket" : ticket})
 
-def project_edit_ticket(request, project_id):
-  project = Project.objects.get(id=project_id)
-  return render(request, 'tickets/edit.html', {"project" : project})
+def ticket_edit(request, project_id, ticket_id):
+  ticket = get_object_or_404(Ticket, pk=ticket_id)
+  project = get_object_or_404(Project, pk = project_id)
+  if(request.method == "POST"):
+    form = TicketForm(request.POST, instance = ticket)
+    if form.is_valid():
+      form.instance.date_added = datetime.date.today()
+      form.instance.date_updated = datetime.date.today()
+      form.instance.user = User.objects.get(id = request.session["user_id"])
+      form.instance.project = project
+      try:
+        form.save()
+        return render(request, 'tickets/show.html', {"project" : project, "ticket" : ticket})
+      except:
+        return HttpResponseServerError()
+  else:
+    form = TicketForm(instance = ticket)
+  return render(request, 'tickets/edit.html', {"form" : form, "ticket" : ticket, "project" : project})
   
-def project_delete_ticket(request, ticket_id):
+def project_delete_ticket(request, project_id, ticket_id):
+  project = get_object_or_404(Project, pk = project_id)
   ticket = get_object_or_404(Ticket, pk=ticket_id)
   ticket.delete();
-  return redirect(Ticket.url)
+  return render(request, "projects/show.html", {"project" : project})
 
 def projects_for_user(request):
   user = request.user

@@ -42,8 +42,8 @@
         <ul class="inline">
           <li><a class="btn btn-info" href="{% url project_show project.id %}">Go back</a></li>
           {% if project|creator:user or ticket|ticketCreator:user %}
-            <li><a class="btn btn-warning" href="{% url project_edit_ticket project.id, ticket.id%}">Edit</a></li>
-            <li><a class="btn btn-danger" href="{% url project_delete_ticket project.id, ticket.id%}">Remove</a></li>
+            <li><a class="btn btn-warning" href="{% url ticket_edit project.id,ticket.id%}">Edit</a></li>
+            <li><a class="btn btn-danger" href="{% url project_delete_ticket project.id,ticket.id%}">Remove</a></li>
           {% endif %}
         </ul>
       </div>
