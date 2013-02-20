@@ -1,5 +1,5 @@
 from django.shortcuts import get_list_or_404, render, get_object_or_404, render, redirect
-from labb1.models import Project, Ticket, Status, ProjectForm, LoginForm, User
+from labb1.models import Project, Ticket, Status, ProjectForm, LoginForm, User, TicketForm
 from django.contrib.auth import authenticate, login, logout
 import datetime
 from django.contrib.auth.decorators import login_required, permission_required
@@ -49,6 +49,9 @@ def project_add(request):
   if request.method == "POST":
     form = ProjectForm(request.POST)
     if form.is_valid():
+      form.instance.date_added = datetime.date.today()
+      form.instance.date_updated = datetime.date.today()
+      form.instance.owner = User.objects.get(id = request.session["user_id"])
       try:
         form.save()
         request.session["message"] = "Successfully added your project"
@@ -73,12 +76,12 @@ def project_edit(request, project_id):
     if form.is_valid():
       try:
         form.save()
-        return redirect(Project.url)
+        return redirect('project_list')
       except:
         return HttpResponseServerError()
   else:
     form = ProjectForm(instance = project)
-  return render(request, Template_edit_project, {"form" : form, "project" : project})
+  return render(request, 'projects/edit.html', {"form" : form, "project" : project})
 
 def project_show(request, project_id):
   project = Project.objects.get(id=project_id)
@@ -116,7 +119,25 @@ def projects_for_user(request):
 def project_add_ticket(request, project_id):
   user = User.objects.get(id = request.session["user_id"])
   project = Project.objects.get(id = project_id)
-  return render(request, "tickets/add.html", {'project' : project, 'user' : user })
+
+  if request.method == "POST":
+    form = TicketForm(request.POST)
+    if form.is_valid():
+      form.instance.date_added = datetime.date.today()
+      form.instance.date_updated = datetime.date.today()
+      form.instance.user = User.objects.get(id = request.session["user_id"])
+      form.instance.project = Project.objects.get(id = project_id)
+      try:
+        form.save()
+        request.session["message"] = "Successfully added a ticket"
+        tickets = project.tickets
+        return render(request, "projects/show.html", {"project" : project, "tickets" : tickets})
+      except:
+        return HttpResponseServerError()
+  else:
+      form = TicketForm()
+  return render(request, 'tickets/add.html', {"form" : form, "project" : project})
+  return HttpResponse('Permission denied')
 
 def home(request):
 

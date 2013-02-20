@@ -50,3 +50,4 @@
 #error_messages {color:red;}
 .white {color:white;}
 .errorlist li{color:red;}
+.errorlist {list-style-type: none;}

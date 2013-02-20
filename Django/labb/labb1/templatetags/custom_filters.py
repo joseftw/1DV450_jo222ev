@@ -8,9 +8,8 @@ def creator(project, user):
 
 @register.filter(name = 'member')
 def member(project, user):
-  users = project.user
-  print users
-  if user in users: 
+  members = project.user
+  if user in members: 
     return True
   return False
 

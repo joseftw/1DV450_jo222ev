@@ -3,6 +3,13 @@
 {% block title %}
   {{ ticket.name }} for {{project.name}}
 {% endblock %}
+{% block menu%}
+  <li><a href="/home">Home</a></li>
+  <li class="active"><a href="/projects">All projects</a></li>
+  <li><a href="#">Add new project</a></li>
+  <li><a href="#">Welcome {{user.first_name}}</a></li>
+  <li><a class="btn-small btn-danger" href="/logout">Log out</a></li>
+{% endblock %}
 {% block content%}
 <div class="row">
     <div class="span12 gradientGray">
@@ -16,7 +23,7 @@
             <h4>Creator</h4>
             <ul class="inline">
               <p>{{ ticket.user.get_full_name}}</p>
-              <p>Belongs to: {{project.name}}</p>
+              <p>Belongs to project: <a href="{% url project_show project.id%}">{{project.name}}</a></p>
             </ul>
           </div>
           <div id="projectSecond" class="span5 projectInfoDiv offset1">
