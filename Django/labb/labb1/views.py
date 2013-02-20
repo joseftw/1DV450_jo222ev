@@ -3,7 +3,9 @@ from labb1.models import Project, Ticket, Status, ProjectForm, LoginForm, User, 
 from django.contrib.auth import authenticate, login, logout
 import datetime
 from django.contrib.auth.decorators import login_required, permission_required
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError, HttpResponseRedirect
+from django.contrib import messages
+from django.core.urlresolvers import reverse
 
 def login_user(request):
   
@@ -19,7 +21,7 @@ def login_user(request):
       if user is not None:
         if user.is_active:
           login(request, user)
-          request.session["message"] = "Welcome" + user.first_name
+          messages.success(request, 'Welcome ' + request.user.first_name)
           request.session["isLoggedIn"] = True
           request.session["user_id"] = user.id
           request.session["user"] = User.objects.get(id = user.id)
@@ -27,14 +29,14 @@ def login_user(request):
         else:
           return HttpResponse("<h1>Your account is disabled</h1>")
       else:
-        request.session["message"] = "Wrong username and/or password"
+        messages.error(request, 'Wrong username and/or password ')
   else:
     form = LoginForm()
   return render(request, "login/login.html", {'form' : form})
 
 def logout_user(request):
   logout(request)
-  request.session["message"] = "You have logged out"
+  messages.info(request, 'You have logged out')
   request.session["isLoggedIn"] = False
   return redirect('home')
 
@@ -46,7 +48,7 @@ def project_list(request):
     tickets = Ticket.objects.filter(status__status_name = "Critical")
     return render(request, 'projects/list.html', {"projects" : projects, "tickets" : tickets, "user" : user})
   else:
-    request.session["message"] = "You need to be logged in to view this."
+    messages.error(request, 'You need to be logged in to view this.')
     return redirect("login")
 
 def project_add(request):
@@ -72,10 +74,10 @@ def project_delete(request, project_id):
   project = get_object_or_404(Project, pk=project_id)
   if project.owned_by_user(request.user): 
     project.delete()
-    request.session["message"] = "The project has been removed"
+    messages.success(request, 'The project has been deleted.')
     return redirect ('project_list')
   else:
-    request.session["message"] = "You have no permission to delete this project"
+    messages.error(request, 'You have no permission to delete this project.')
     return render(request, 'projects/show.html', {"project" : project})
 
 def project_edit(request, project_id):
@@ -86,6 +88,7 @@ def project_edit(request, project_id):
       if form.is_valid():
         try:
           form.save()
+          messages.success(request, 'You have successfully edited the project.')
           return redirect('project_list')
         except:
           return HttpResponseServerError()
@@ -93,7 +96,7 @@ def project_edit(request, project_id):
       form = ProjectForm(instance = project)
     return render(request, 'projects/edit.html', {"form" : form, "project" : project})
   else:
-    request.session["message"] = "You are not allowed to edit this project."
+    messages.error(request, 'You have no permission to edit this project.')
     return render(request, 'projects/show.html', {"project" : project})
 
 def project_show(request, project_id):
@@ -103,7 +106,7 @@ def project_show(request, project_id):
     tickets = project.tickets   
     return render(request, 'projects/show.html', {"project" : project, "members" : members, "tickets" : tickets})
   else:
-    request.session["message"] = "You need to be logged in to view this."
+    messages.error(request, 'You have no permission to delete this project.')
     return redirect("login")
 
 def project_show_tickets(request, project_id):
@@ -112,16 +115,23 @@ def project_show_tickets(request, project_id):
     tickets = Project.objects.get(id=project_id).tickets.all()
     return render(request, 'projects/show_project_tickets.html', {"project" : project, "tickets" : tickets})
   else:
-    request.session["message"] = "You need to be logged in to view this."
+    messages.error(request, 'You need to be logged in to view this.')
     return redirect("login")
 
 def project_join(request, project_id):
   project = Project.objects.get(id = project_id)
   user = request.user
   if not project.member_in_project(user):
-    project.user = user
+    project.user.add(user)
     project.save
-    return render(request, "projects/show.html", {"project" : project})
+    messages.success(request, 'You have joined the project!')
+    url = reverse('project_show', kwargs={'project_id': project.id})
+    return HttpResponseRedirect(url)
+  else:
+    messages.info(request, 'You are already a member of this project.')
+    url = reverse('project_show', kwargs={'project_id': project.id})
+    return HttpResponseRedirect(url)
+
 
 def ticket_show(request, project_id, ticket_id):
   if request.session["isLoggedIn"]:
@@ -129,7 +139,7 @@ def ticket_show(request, project_id, ticket_id):
     ticket = Ticket.objects.get(id=ticket_id)
     return render(request, 'tickets/show.html', {"project" : project, "ticket" : ticket})
   else:
-    request.session["message"] = "You need to be logged in to view this."
+    messages.error(request, 'You need to be logged in to view this.')
     return redirect("login")
 
 def ticket_edit(request, project_id, ticket_id):
@@ -145,6 +155,7 @@ def ticket_edit(request, project_id, ticket_id):
         form.instance.project = project
         try:
           form.save()
+          messages.success(request, 'You have successfully edited the ticket!')
           return render(request, 'tickets/show.html', {"project" : project, "ticket" : ticket})
         except:
           return HttpResponseServerError()
@@ -152,7 +163,7 @@ def ticket_edit(request, project_id, ticket_id):
       form = TicketForm(instance = ticket)
     return render(request, 'tickets/edit.html', {"form" : form, "ticket" : ticket, "project" : project})
   else:
-    request.session["message"] = "You have no permission to edit this ticket"
+    messages.error(request, 'You have no permission to delete this ticket.')
     return render(request, 'tickets/show.html', {"project" : project, "ticket" : ticket})
   
 def project_delete_ticket(request, project_id, ticket_id):
@@ -160,9 +171,10 @@ def project_delete_ticket(request, project_id, ticket_id):
   ticket = get_object_or_404(Ticket, pk=ticket_id)
   if project.owned_by_user(request.user) or ticket.owned_by_user(request.user):
     ticket.delete();
+    messages.success(request, 'You successfully deleted the ticket.')
     return render(request, "projects/show.html", {"project" : project})
   else:
-    request.session["message"] = "You have no permission to delete this ticket"
+    messages.error(request, 'You have no permission to delete this ticket.')
     return render(request, 'projects/show.html', {"project" : project})
 
 def project_add_ticket(request, project_id):
@@ -178,9 +190,10 @@ def project_add_ticket(request, project_id):
         form.instance.project = Project.objects.get(id = project_id)
         try:
           form.save()
-          request.session["message"] = "Successfully added a ticket"
+          messages.success(request, 'You successfully added a ticket!.')
           tickets = project.tickets
-          return render(request, "projects/show.html", {"project" : project, "tickets" : tickets})
+          url = reverse('project_show', kwargs={'project_id': project.id})
+          return HttpResponseRedirect(url)
         except:
           return HttpResponseServerError()
     else:
@@ -188,9 +201,10 @@ def project_add_ticket(request, project_id):
     return render(request, 'tickets/add.html', {"form" : form, "project" : project})
     return HttpResponse('Permission denied')
   else:
-    request.session["message"] = "You have no permission to add a ticket, you need to be a member of the project."
-    return render(request, 'projects/show.html', {"project" : project})
+    messages.info(request, 'You have no permission to add a ticket, you need to be a member of the project.')
+    url = reverse('project_show', kwargs={'project_id': project.id})
+    return HttpResponseRedirect(url)
 
 def home(request):
-
-  return render(request, "home/index.html")
+  status = request.session["isLoggedIn"]
+  return render(request, "home/index.html", {"status" : status})

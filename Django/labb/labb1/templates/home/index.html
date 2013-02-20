@@ -2,11 +2,21 @@
   {% block title %}
     Home
   {% endblock %}
+  {% block menu%}
+  <li class="active"><a href="/home">Home</a></li>
+  <li><a href="/projects">All projects</a></li>
+  <li><a href="#">Add new project</a></li>
+  <li><a href="#">Welcome {{user.first_name}}</a></li>
+  <li><a class="btn-small btn-danger" href="/logout">Log out</a></li>
+{% endblock %}
   {% block content%}
     <div class="row">  
       <div id="mainDiv" class="span12 gradientGray">
         <h1>Welcome to my awesome ASPMS site!</h1>
-        <a class="btn btn-info btn-large" href="/login">Log in!</a>
+        <p>It's a simple project management system built on Django as a project in the course "Webbramverk" @ LNU</p>
+        {% if not status %}
+          <a class="btn btn-info" href="/login">Log in!</a>
+        {% endif %}
       </div>  
     </div>
   {% endblock %}

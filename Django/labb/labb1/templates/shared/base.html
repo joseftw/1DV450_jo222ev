@@ -16,8 +16,8 @@
     }
   </style>
     {% block stylesheet %}
-      <link href="{{ STATIC_URL }}bootstrap.css" rel="stylesheet" type="text/css" />
-      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}application.css" />
+      <link href="/media/css/bootstrap.css" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="/media/css/application.css" />
     {% endblock %}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
@@ -43,8 +43,25 @@
       </div>
     </div>
     <div class="container">
+      <div class="row">
+      {% if messages %}
+        <div id="messageDiv" class="span11 alert alert-info">
+          {% for message in messages %}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+      
+    </div>
       {% block content %}
 
+      {% endblock %}
+      {% block scripts %}
+        <script src="/media/js/jquery-1.9.1.js"></script>
+        <script src="/media/js/jquery-ui-1.10.1.custom.min.js"></script>
+        <script src="/media/js/bootstrap.js"></script>
+        <script src="/media/js/application.js"></script>
       {% endblock %}
       <footer>
       </footer>
