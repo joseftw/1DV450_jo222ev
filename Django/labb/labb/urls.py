@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -37,3 +39,7 @@ if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT}))
+
+urlpatterns += patterns('',
+    (r'^foo/$', login_required(TemplateView.as_view(template_name='foo_index.html'))),
+)

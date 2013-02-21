@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError, HttpResponseRedirect
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
 def login_user(request):
   
@@ -40,19 +41,16 @@ def logout_user(request):
   request.session["isLoggedIn"] = False
   return redirect('home')
 
+@login_required
 def project_list(request):
-  if request.session["isLoggedIn"]:
     projects = Project.objects.order_by('date_updated')
     user = request.user
     # Gets all critical tickets
     tickets = Ticket.objects.filter(status__status_name = "Critical")
     return render(request, 'projects/list.html', {"projects" : projects, "tickets" : tickets, "user" : user})
-  else:
-    messages.error(request, 'You need to be logged in to view this.')
-    return redirect("login")
 
+@login_required
 def project_add(request):
-  if request.session["isLoggedIn"]:
     if request.method == "POST":
       form = ProjectForm(request.POST)
       if form.is_valid():
@@ -69,28 +67,21 @@ def project_add(request):
         form = ProjectForm()
     return render(request, 'projects/add.html', {"form" : form})
     return HttpResponse('Permission denied')
-  else:
-    messages.error(request, 'You need to be logged in to view this.')
-    return redirect("login")
 
+@login_required
 def project_delete(request, project_id):
   user = request.user
   project = get_object_or_404(Project, pk=project_id)
-  if request.session["isLoggedIn"]:
-    if project.owned_by_user(request.user): 
-      project.delete()
-      messages.success(request, 'The project has been deleted.')
-      return redirect ('project_list')
-    else:
-      messages.error(request, 'You have no permission to delete this project.')
-      return render(request, 'projects/show.html', {"project" : project})
+  if project.owned_by_user(request.user): 
+    project.delete()
+    messages.success(request, 'The project has been deleted.')
+    return redirect ('project_list')
   else:
-    messages.error(request, 'You need to be logged in to view this.')
-    return redirect("login")
+    messages.error(request, 'You have no permission to delete this project.')
+    return render(request, 'projects/show.html', {"project" : project})
 
+@login_required
 def project_edit(request, project_id):
-  
-  if request.session["isLoggedIn"]:
     project = get_object_or_404(Project, pk=project_id)
     if project.owned_by_user(request.user):
       if(request.method == "POST"):
@@ -109,31 +100,22 @@ def project_edit(request, project_id):
     else:
       messages.error(request, 'You have no permission to edit this project.')
       return render(request, 'projects/show.html', {"project" : project})
-  else:
-    messages.error(request, 'You need to be logged in to view this.')
-    return redirect("login")
 
+@login_required
 def project_show(request, project_id):
-  if request.session["isLoggedIn"]:
     project = Project.objects.get(id=project_id)
     members = project.user
     tickets = project.tickets   
     return render(request, 'projects/show.html', {"project" : project, "members" : members, "tickets" : tickets})
-  else:
-    messages.error(request, 'You have no permission to delete this project.')
-    return redirect("login")
 
+@login_required
 def project_show_tickets(request, project_id):
-  if request.session["isLoggedIn"]:
     project = Project.objects.get(id=project_id) 
     tickets = Project.objects.get(id=project_id).tickets.all()
     return render(request, 'projects/show_project_tickets.html', {"project" : project, "tickets" : tickets})
-  else:
-    messages.error(request, 'You need to be logged in to view this.')
-    return redirect("login")
 
+@login_required
 def project_join(request, project_id):
-  if request.session["isLoggedIn"]:
     project = Project.objects.get(id = project_id)
     user = request.user
     if not project.member_in_project(user):
@@ -146,21 +128,15 @@ def project_join(request, project_id):
       messages.info(request, 'You are already a member of this project.')
       url = reverse('project_show', kwargs={'project_id': project.id})
       return HttpResponseRedirect(url)
-  else:
-    messages.error(request, 'You need to be logged in to view this.')
-    return redirect("login")
 
+@login_required
 def ticket_show(request, project_id, ticket_id):
-  if request.session["isLoggedIn"]:
     project = Project.objects.get(id=project_id)
     ticket = Ticket.objects.get(id=ticket_id)
     return render(request, 'tickets/show.html', {"project" : project, "ticket" : ticket})
-  else:
-    messages.error(request, 'You need to be logged in to view this.')
-    return redirect("login")
 
+@login_required
 def ticket_edit(request, project_id, ticket_id):
-  if request.session["isLoggedIn"]:
     ticket = get_object_or_404(Ticket, pk=ticket_id)
     project = get_object_or_404(Project, pk = project_id)
     if project.owned_by_user(request.user) or ticket.owned_by_user(request.user):
@@ -184,12 +160,9 @@ def ticket_edit(request, project_id, ticket_id):
     else:
       messages.error(request, 'You have no permission to edit this ticket.')
       return render(request, 'tickets/show.html', {"project" : project, "ticket" : ticket})
-  else:
-    messages.error(request, 'You need to be logged in to view this.')
-    return redirect("login")
 
+@login_required
 def project_delete_ticket(request, project_id, ticket_id):
-  if request.session["isLoggedIn"]:
     project = get_object_or_404(Project, pk = project_id)
     ticket = get_object_or_404(Ticket, pk=ticket_id)
     if project.owned_by_user(request.user) or ticket.owned_by_user(request.user):
@@ -201,12 +174,9 @@ def project_delete_ticket(request, project_id, ticket_id):
       messages.error(request, 'You have no permission to delete this ticket.')
       url = reverse('project_show', kwargs={'project_id': project.id})
       return HttpResponseRedirect(url)
-  else:
-    messages.error(request, 'You need to be logged in to view this.')
-    return redirect("login")
 
+@login_required
 def project_add_ticket(request, project_id):
-  if request.session["isLoggedIn"]:
     user = request.user
     project = Project.objects.get(id = project_id)
     if project.owned_by_user(user) or project.member_in_project(user): 
@@ -233,9 +203,6 @@ def project_add_ticket(request, project_id):
       messages.info(request, 'You have no permission to add a ticket, you need to be a member of the project.')
       url = reverse('project_show', kwargs={'project_id': project.id})
       return HttpResponseRedirect(url)
-  else:
-    messages.error(request, 'You need to be logged in to view this.')
-    return redirect("login")
 
 def home(request):
   status = request.session["isLoggedIn"]
