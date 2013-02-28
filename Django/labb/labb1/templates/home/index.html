@@ -5,18 +5,19 @@
   {% block menu%}
   <li class="active"><a href="/home">Home</a></li>
   <li><a href="/projects">All projects</a></li>
-  <li><a href="#">Add new project</a></li>
-  <li><a href="#">Welcome {{user.first_name}}</a></li>
-  <li><a class="btn-small btn-danger" href="/logout">Log out</a></li>
+  <li><a href="/projects/add">Add new project</a></li>
+  {% if user.is_authenticated %}
+    <li><a href="#">Welcome {{user.first_name}}</a></li>
+    <li><a class="btn-small btn-danger" href="/logout">Log out</a></li>
+  {% endif %}
 {% endblock %}
   {% block content%}
     <div class="row">  
       <div id="mainDiv" class="span12 gradientGray">
         <h1>Welcome to my awesome ASPMS site!</h1>
         <p>It's a simple project management system built on Django as a project in the course "Webbramverk" @ LNU</p>
-        {% if not status %}
+        <p>I must say that I prefer Ruby on Rails...</p>
           <a class="btn btn-info" href="/login">Log in!</a>
-        {% endif %}
       </div>  
     </div>
   {% endblock %}

@@ -59,7 +59,7 @@ def project_add(request):
         form.instance.owner = request.user
         try:
           form.save()
-          request.session["message"] = "Successfully added your project"
+          messages.success(request, 'Successfully added the "' + form.instance.name + '" project!')
           return redirect("project_list")
         except:
           return HttpResponseServerError()
@@ -73,11 +73,12 @@ def project_delete(request, project_id):
   user = request.user
   project = get_object_or_404(Project, pk=project_id)
   if project.owned_by_user(request.user): 
+    name = project.name
     project.delete()
-    messages.success(request, 'The project has been deleted.')
+    messages.success(request, 'The project "' + name + '" has been deleted.')
     return redirect ('project_list')
   else:
-    messages.error(request, 'You have no permission to delete this project.')
+    messages.error(request, 'You have no permission to delete the "' + project.name + '" project.')
     return render(request, 'projects/show.html', {"project" : project})
 
 @login_required
@@ -89,7 +90,7 @@ def project_edit(request, project_id):
         if form.is_valid():
           try:
             form.save()
-            messages.success(request, 'You have successfully edited the project.')
+            messages.success(request, 'You have successfully edited the "' + project.name + '" project!')
             url = reverse('project_show', kwargs={'project_id': project.id})
             return HttpResponseRedirect(url)
           except:
@@ -98,7 +99,7 @@ def project_edit(request, project_id):
         form = ProjectForm(instance = project)
       return render(request, 'projects/edit.html', {"form" : form, "project" : project})
     else:
-      messages.error(request, 'You have no permission to edit this project.')
+      messages.error(request, 'You have no permission to edit the "'+ project.name +'" project.')
       return render(request, 'projects/show.html', {"project" : project})
 
 @login_required
@@ -121,11 +122,11 @@ def project_join(request, project_id):
     if not project.member_in_project(user):
       project.user.add(user)
       project.save
-      messages.success(request, 'You have joined the project!')
+      messages.success(request, 'You have joined the project "' + project.name + '"!')
       url = reverse('project_show', kwargs={'project_id': project.id})
       return HttpResponseRedirect(url)
     else:
-      messages.info(request, 'You are already a member of this project.')
+      messages.info(request, 'You are already a member of the "' + project.name + '" project.')
       url = reverse('project_show', kwargs={'project_id': project.id})
       return HttpResponseRedirect(url)
 
@@ -149,7 +150,7 @@ def ticket_edit(request, project_id, ticket_id):
           form.instance.project = project
           try:
             form.save()
-            messages.success(request, 'You have successfully edited the ticket!')
+            messages.success(request, 'You have successfully edited the ticket "' + ticket.name + '"!')
             url = reverse('project_show', kwargs={'project_id': project.id})
             return HttpResponseRedirect(url)
           except:
@@ -158,20 +159,21 @@ def ticket_edit(request, project_id, ticket_id):
         form = TicketForm(instance = ticket)
       return render(request, 'tickets/edit.html', {"form" : form, "ticket" : ticket, "project" : project})
     else:
-      messages.error(request, 'You have no permission to edit this ticket.')
+      messages.error(request, 'You have no permission to edit the "' + ticket.name + '" ticket.')
       return render(request, 'tickets/show.html', {"project" : project, "ticket" : ticket})
 
 @login_required
 def project_delete_ticket(request, project_id, ticket_id):
     project = get_object_or_404(Project, pk = project_id)
     ticket = get_object_or_404(Ticket, pk=ticket_id)
+    name = ticket.name
     if project.owned_by_user(request.user) or ticket.owned_by_user(request.user):
       ticket.delete();
-      messages.success(request, 'You have successfully deleted the ticket.')
+      messages.success(request, 'You have successfully removed the ticket "' + name +'"!')
       url = reverse('project_show', kwargs={'project_id': project.id})
       return HttpResponseRedirect(url)
     else:
-      messages.error(request, 'You have no permission to delete this ticket.')
+      messages.error(request, 'You have no permission to remove the ticket "' + name + '".')
       url = reverse('project_show', kwargs={'project_id': project.id})
       return HttpResponseRedirect(url)
 
@@ -189,7 +191,7 @@ def project_add_ticket(request, project_id):
           form.instance.project = Project.objects.get(id = project_id)
           try:
             form.save()
-            messages.success(request, 'You have successfully added a ticket!.')
+            messages.success(request, 'You have successfully added a ticket for the "' + project.name + '"" project!')
             tickets = project.tickets
             url = reverse('project_show', kwargs={'project_id': project.id})
             return HttpResponseRedirect(url)
@@ -200,10 +202,9 @@ def project_add_ticket(request, project_id):
       return render(request, 'tickets/add.html', {"form" : form, "project" : project})
       return HttpResponse('Permission denied')
     else:
-      messages.info(request, 'You have no permission to add a ticket, you need to be a member of the project.')
+      messages.info(request, 'You have no permission to add a ticket, you need to be a member of the "' + project.name + '" project.')
       url = reverse('project_show', kwargs={'project_id': project.id})
       return HttpResponseRedirect(url)
 
 def home(request):
-  status = request.session["isLoggedIn"]
-  return render(request, "home/index.html", {"status" : status})
+  return render(request, "home/index.html")

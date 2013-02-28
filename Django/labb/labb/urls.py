@@ -41,5 +41,5 @@ if settings.DEBUG:
         'document_root': settings.MEDIA_ROOT}))
 
 urlpatterns += patterns('',
-    (r'^foo/$', login_required(TemplateView.as_view(template_name='foo_index.html'))),
+    (r'^foo/$', login_required(TemplateView.as_view(template_name='index.html'))),
 )
