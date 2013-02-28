@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # First - url to match, second = path to view
-    
+    url(r'^$', 'labb1.views.home', name="indexPage"),
     url(r'^login/$', 'labb1.views.login_user', name="login"),
     url(r'^logout/$', 'labb1.views.logout_user', name="logout"),
     url(r'^home/$', 'labb1.views.home', name="home"),
